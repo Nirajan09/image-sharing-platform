@@ -11,7 +11,7 @@ connectToDB();
 
 app.use(cors({
   origin: ['https://image-sharing-platform.vercel.app', 'http://localhost:3000'],
-  credentials: true
+  credentials: true,
 }));
 
 app.use(express.json());
