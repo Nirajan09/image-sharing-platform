@@ -9,9 +9,8 @@ const app = express();
 
 connectToDB();
 
-
-app.options('/{*any}', cors({
-  origin: ['https://image-sharing-platform.vercel.app', 'http://localhost:3000'],
+app.use(cors({
+  origin: ['https://image-sharing-platform-p5za.onrender.com', 'http://localhost:3000'],
   credentials: true
 }));
 
