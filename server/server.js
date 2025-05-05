@@ -10,7 +10,7 @@ const app = express();
 connectToDB();
 
 app.use(cors({
-  origin: ['https://image-sharing-platform-p5za.onrender.com', 'http://localhost:3000'],
+  origin: "*",
   credentials: true
 }));
 
