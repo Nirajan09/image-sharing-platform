@@ -6,7 +6,7 @@ const fs = require("fs");
 const UploadImageController = async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(500).json({
+      return res.status(400).json({
         success: false,
         message: "Please Add Image to Continue",
       });

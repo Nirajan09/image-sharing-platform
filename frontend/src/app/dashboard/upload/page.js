@@ -91,7 +91,7 @@ const UploadPage = () => {
 
   return (
     <>
-      <div className="h-[90vh]">
+      <div className="h-[78vh]">
         <div className="md:max-w-md max-w-[300px] mx-auto mt-20 p-2 md:p-6 border rounded-lg shadow-md bg-white">
           <h1 className="text-2xl font-semibold mb-4 text-center">
             Upload Image
