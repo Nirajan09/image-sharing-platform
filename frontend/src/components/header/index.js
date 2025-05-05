@@ -56,7 +56,7 @@ const Header = () => {
             onClick={() => setMenuOpen(false)}
             className={`relative hover:text-[#3B28CC] ${
               isActive(item.path)
-                ? "bg-[#3B28CC] text-white px-2 py-1 hover:text-white"
+                ? "bg-[#3B28CC] text-white px-2 py-1 hover:text-white rounded-xl"
                 : ""
             }`}
           >
