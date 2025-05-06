@@ -4,7 +4,13 @@ import Media from "./Media";
 
 export default function MediaPage() {
   return (
-    <Suspense fallback={<div className="w-full h-screen flex items-center justify-center"><Loader /></div>}>
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <Loader />
+        </div>
+      }
+    >
       <Media />
     </Suspense>
   );

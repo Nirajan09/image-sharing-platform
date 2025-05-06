@@ -81,7 +81,11 @@ const Register = () => {
   }, [token,router]);
 
   if (loading) {
-    return <Loader />;
+    return (
+          <div className="w-full h-screen flex items-center justify-center">
+            <Loader />
+          </div>
+        );
   }
   return (
     <>
