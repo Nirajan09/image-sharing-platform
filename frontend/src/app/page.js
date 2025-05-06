@@ -8,17 +8,10 @@ import Loader from "@/components/Loader";
 export default function Home() {
   const router = useRouter();
   const { token } = useAuth();
-  const loading=true;
   const checkAuth = () => {
     token ? router.push("/dashboard/media") : router.push("/auth/sign-in");
   };
-  if(loading){
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
+  
   return (
     <>
       <div>
