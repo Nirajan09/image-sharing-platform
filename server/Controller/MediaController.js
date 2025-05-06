@@ -11,7 +11,7 @@ const UploadImageController = async (req, res) => {
         message: "Please Add Image to Continue",
       });
     }
-    const imageRes = await upload(req.file.path, "image");
+    const imageRes = await upload(req.file.buffer, "image");
     const { url, publicId } = imageRes;
     const createdImage = await Media.create({
       url,
@@ -20,8 +20,6 @@ const UploadImageController = async (req, res) => {
       type: "image",
     });
 
-    //delete the file from local system
-    fs.unlinkSync(req.file.path);
 
     res.status(200).json({
       success: true,
@@ -29,7 +27,7 @@ const UploadImageController = async (req, res) => {
       image: createdImage,
     });
   } catch (error) {
-    console.log("Error uploading the image", error);
+    console.error("Upload error:", error.message, error.stack);
     res.status(500).json({
       success: false,
       message: "Something went wrong",
@@ -169,7 +167,7 @@ const UpdateImageController = async (req, res) => {
     await cloudinary.uploader.destroy(media.publicId);
 
     //upload the updated Image into cloudinary
-    const uploadImage = await upload(req.file.path, "image");
+    const uploadImage = await upload(req.file.buffer, "image");
     const { url, publicId } = uploadImage;
 
     //upload the updated Image into database
@@ -177,8 +175,6 @@ const UpdateImageController = async (req, res) => {
     media.publicId = publicId;
     await media.save();
 
-    //delete the file from local system
-    fs.unlinkSync(req.file.path);
 
     res.status(200).json({
       success: true,
