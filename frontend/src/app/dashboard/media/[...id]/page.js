@@ -117,7 +117,7 @@ const UserUploadedImage = () => {
                 alt={item.publicId}
                 className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
               />
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+              <div className="absolute bottom-2 right-2 opacity-30 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 z-10">
                 <DropMenu
                   id={item._id}
                   uploadedBy={item.uploadedBy}
