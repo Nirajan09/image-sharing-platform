@@ -29,7 +29,7 @@ const Media = () => {
   const [getcreatedAtInfo, setcreatedAtInfo] = useState(null);
   const [getupdatedAtInfo, setupdatedAtInfo] = useState(null);
   const searchParams = useSearchParams();
-const load=true;
+
   const arrayofTotalPages = Array.from({ length: totalPage }, (_, i) => i + 1);
 
   const getMedia = useCallback(
@@ -92,8 +92,7 @@ const load=true;
     });
   }, []);
 
-  // if (loading || checkingAuth) {
-  if(load){
+  if (loading || checkingAuth) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
         <Loader />
