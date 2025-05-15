@@ -156,7 +156,7 @@ const DropMenu = ({
 
       {/* Dialog for viewing Image */}
       <Dialog open={openImage} onOpenChange={setOpenImage}>
-        <DialogContent className="w-full h-[75vh] p-4">
+        <DialogContent className="w-full h-[90vh] p-4 flex  flex-col">
           <DialogHeader>
             <DialogTitle>Image Details</DialogTitle>
             <DialogDescription>
@@ -173,11 +173,14 @@ const DropMenu = ({
               Updated At: {getupdatedAtInfo || "Not Available"}
             </DialogDescription>
           </DialogHeader>
-          <img
-            src={imageUrl}
-            alt={publicId}
-            className="rounded h-[40vh] w-full object-cover object-center"
-          />
+          
+          <div className="relative w-full max-w-md max-h-[550px] overflow-hidden rounded-xl mx-auto">
+            <img
+              src={imageUrl}
+              alt={publicId}
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+            />
+        </div>
         </DialogContent>
       </Dialog>
     </>
