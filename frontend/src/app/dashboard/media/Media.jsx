@@ -153,6 +153,7 @@ const Media = () => {
             <PaginationItem>
               <PaginationPrevious
                 disabled={currentPage <= 1}
+                className={currentPage <=1 && "cursor-not-allowed"}
                 href={currentPage > 1 ? `?page=${currentPage - 1}` : undefined}
               />
             </PaginationItem>
@@ -174,6 +175,7 @@ const Media = () => {
             )}
             <PaginationItem>
               <PaginationNext
+              className={currentPage >= totalPage && "cursor-not-allowed"}
                 disabled={currentPage >= totalPage}
                 href={
                   currentPage < totalPage
