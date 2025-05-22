@@ -25,7 +25,6 @@ const Media = () => {
   const [loading, setLoading] = useState(true);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [getusernameInfo, setusernameInfo] = useState("");
-  const [getemailInfo, setemailInfo] = useState("");
   const [getcreatedAtInfo, setcreatedAtInfo] = useState(null);
   const [getupdatedAtInfo, setupdatedAtInfo] = useState(null);
   const searchParams = useSearchParams();
@@ -47,7 +46,6 @@ const Media = () => {
         );
         const result = await res.json();
         setusernameInfo(result.data[0].uploadedBy.username);
-        setemailInfo(result.data[0].uploadedBy.email);
         setcreatedAtInfo(result.data[0].createdAt);
         setupdatedAtInfo(result.data[0].updatedAt);
         setMedia(result.data);
@@ -122,7 +120,6 @@ const Media = () => {
                   publicId={item.publicId}
                   imageUrl={item.url}
                   getusernameInfo={item.uploadedBy.username}
-                  getemailInfo={item.uploadedBy.email}
                   getcreatedAtInfo={formatDate(item.createdAt)}
                   getupdatedAtInfo={formatDate(item.updatedAt)}
                 />

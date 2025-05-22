@@ -39,7 +39,6 @@ const DropMenu = ({
   publicId,
   imageUrl,
   getusernameInfo,
-  getemailInfo,
   getcreatedAtInfo,
   getupdatedAtInfo,
 }) => {
@@ -165,7 +164,6 @@ const DropMenu = ({
             <DialogDescription>
               Uploaded By: {getusernameInfo}
             </DialogDescription>
-            <DialogDescription>User&apos;s Email: {getemailInfo}</DialogDescription>
             <DialogDescription>
               Created At: {getcreatedAtInfo || "Not Available"}
             </DialogDescription>
