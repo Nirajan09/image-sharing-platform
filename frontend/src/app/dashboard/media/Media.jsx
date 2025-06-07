@@ -14,7 +14,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/components/authContext";
 import Loader from "@/components/Loader";
-import Image from 'next/image';
+import { Image } from 'antd';
 const Media = () => {
   const router = useRouter();
   const { token } = useAuth();
@@ -107,7 +107,7 @@ const Media = () => {
               key={item._id}
               className="group relative border rounded-xl overflow-hidden shadow-md bg-white"
             >
-              <img
+              <Image
                 src={item.url}
                 alt={item.publicId}
                 className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
