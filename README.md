@@ -150,6 +150,7 @@ You are free to use, modify, and distribute it with proper attribution.
 
 ## 📬 Contact
 Your Name – Nirajan Tiwari
+
 Email: nirajantiwari09@gmail.com
 
 Project Repository: https://github.com/Nirajan09/image-sharing-platform.git
