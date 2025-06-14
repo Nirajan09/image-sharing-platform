@@ -14,7 +14,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/components/authContext";
 import Loader from "@/components/Loader";
-import { Image } from 'antd';
+import Image from "next/image";
 const Media = () => {
   const router = useRouter();
   const { token } = useAuth();
