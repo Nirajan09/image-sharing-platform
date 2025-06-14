@@ -100,7 +100,7 @@ Set your environment variables in the .env files for both the backend and fronte
 
 📁 Backend: <code>.env</code>
 ```env
-PORT=4000
+PORT=your_port_number
 CONNECTION_STRING=your_mongodb_connection_string
 JWT_SECRET_KEY=your_jwt_secret_key
 CLOUD_NAME=your_cloudinary_cloud_name
@@ -110,7 +110,7 @@ API_SECRET=your_cloudinary_api_secret
 
 📁 Frontend: <code>.env.local</code>
 ```env
-NEXT_PUBLIC_BACK_END=http://localhost:4000
+NEXT_PUBLIC_BACK_END=your_backend_url
 ```
 
 ⚠️ Note: Never commit your .env files to version control (GitHub). Add them to .gitignore to keep your secrets safe.
