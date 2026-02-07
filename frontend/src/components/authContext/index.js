@@ -10,14 +10,14 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = sessionStorage.getItem("token");
+    const storedToken = localStorage.getItem("token");
     if (storedToken) {
       try {
         const decoded = jwtDecode(storedToken);
 
-        // Checking if the token is expired
+        // Check if token is expired
         if (decoded.exp * 1000 < Date.now()) {
-          sessionStorage.removeItem("token");
+          localStorage.removeItem("token");
           setToken(null);
           setUserId(null);
         } else {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.error("Error decoding token:", error);
-        sessionStorage.removeItem("token");
+        localStorage.removeItem("token");
         setToken(null);
         setUserId(null);
       }
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   const login = (newToken) => {
     try {
       setLoading(true);
-      sessionStorage.setItem("token", newToken);
+      localStorage.setItem("token", newToken);
       const decoded = jwtDecode(newToken);
       setToken(newToken);
       setUserId(decoded.userId);
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     try {
       setLoading(true);
-      sessionStorage.removeItem("token");
+      localStorage.removeItem("token");
       setToken(null);
       setUserId(null);
     } catch (error) {
