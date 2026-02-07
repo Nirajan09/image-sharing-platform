@@ -176,7 +176,7 @@ const DropMenu = ({
             <img
               src={imageUrl}
               alt={publicId}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+              className="w-full h-full object-contain transition-transform duration-300 hover:scale-105 cursor-pointer"
             />
         </div>
         </DialogContent>
