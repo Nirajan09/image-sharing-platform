@@ -53,7 +53,7 @@ const DropMenu = ({
   };
 
   const validateUser = useCallback(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     if (token) {
       const decodedtoken = jwtDecode(token);
       setValidUser(decodedtoken.userId === uploadedBy._id);
@@ -64,7 +64,7 @@ const DropMenu = ({
 
   const handleDelete = async () => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         router.push("/auth/sign-in");
         return;

@@ -27,22 +27,25 @@ const Media = () => {
   const [loading, setLoading] = useState(true);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
-  // Optional info states (safe)
+  // Optional info states
   const [getusernameInfo, setusernameInfo] = useState("");
   const [getcreatedAtInfo, setcreatedAtInfo] = useState(null);
   const [getupdatedAtInfo, setupdatedAtInfo] = useState(null);
 
-  const arrayofTotalPages = Array.from(
-    { length: totalPage },
-    (_, i) => i + 1
-  );
+  const arrayofTotalPages = Array.from({ length: totalPage }, (_, i) => i + 1);
 
   // =========================
-  // Fetch Media (SAFE)
+  // Fetch Media with safe token
   // =========================
   const getMedia = useCallback(
     async (page = 1) => {
-      if (!token) return;
+      const storedToken = token || localStorage.getItem("token"); // fallback to localStorage
+
+      if (!storedToken) {
+        console.error("No token found for getMedia");
+        router.push("/auth/sign-in"); // redirect if no token
+        return;
+      }
 
       try {
         setLoading(true);
@@ -51,7 +54,7 @@ const Media = () => {
           `${process.env.NEXT_PUBLIC_BACK_END}/api/media/get-media?page=${page}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${storedToken}`,
             },
             cache: "no-store",
           }
@@ -85,7 +88,7 @@ const Media = () => {
         setLoading(false);
       }
     },
-    [token]
+    [token, router]
   );
 
   // =========================

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+console.log("Backend URL:", process.env.NEXT_PUBLIC_BACK_END);
 
 const UploadPage = () => {
   const router = useRouter();
@@ -51,7 +52,7 @@ const UploadPage = () => {
       setLoading(true);
       const formData = new FormData();
       formData.append("image", image);
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACK_END}/api/media/upload-image`,
