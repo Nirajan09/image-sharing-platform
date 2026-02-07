@@ -11,7 +11,6 @@ const UploadImageController = async (req, res) => {
         message: "Please Add Image to Continue",
       });
     }
-    console.log("req.file:", req.file);
     const imageRes = await upload(req.file.buffer, "image");
     const { url, publicId } = imageRes;
     const createdImage = await Media.create({

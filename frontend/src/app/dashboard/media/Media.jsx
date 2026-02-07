@@ -32,8 +32,6 @@ const Media = () => {
   const [getcreatedAtInfo, setcreatedAtInfo] = useState(null);
   const [getupdatedAtInfo, setupdatedAtInfo] = useState(null);
 
-  const arrayofTotalPages = Array.from({ length: totalPage }, (_, i) => i + 1);
-
   // =========================
   // Fetch Media with safe token
   // =========================
@@ -133,6 +131,36 @@ const Media = () => {
   }, []);
 
   // =========================
+  // Generate Pagination Range
+  // =========================
+  const getPaginationRange = () => {
+    const delta = 1; // pages around current
+    const range = [];
+    const rangeWithDots = [];
+    let l;
+
+    for (let i = 1; i <= totalPage; i++) {
+      if (i === 1 || i === totalPage || (i >= currentPage - delta && i <= currentPage + delta)) {
+        range.push(i);
+      }
+    }
+
+    for (let i of range) {
+      if (l) {
+        if (i - l === 2) {
+          rangeWithDots.push(l + 1);
+        } else if (i - l !== 1) {
+          rangeWithDots.push("...");
+        }
+      }
+      rangeWithDots.push(i);
+      l = i;
+    }
+
+    return rangeWithDots;
+  };
+
+  // =========================
   // Loading State
   // =========================
   if (loading || checkingAuth) {
@@ -211,22 +239,20 @@ const Media = () => {
               />
             </PaginationItem>
 
-            {arrayofTotalPages.map((page) => (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  href={`?page=${page}`}
-                  isActive={page === currentPage}
-                >
-                  {page}
-                </PaginationLink>
+            {getPaginationRange().map((page, idx) => (
+              <PaginationItem key={idx}>
+                {page === "..." ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    href={`?page=${page}`}
+                    isActive={page === currentPage}
+                  >
+                    {page}
+                  </PaginationLink>
+                )}
               </PaginationItem>
             ))}
-
-            {arrayofTotalPages.length > 5 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
 
             <PaginationItem>
               <PaginationNext

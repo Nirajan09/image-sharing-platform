@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-console.log("Backend URL:", process.env.NEXT_PUBLIC_BACK_END);
 
 const UploadPage = () => {
   const router = useRouter();
