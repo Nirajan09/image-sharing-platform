@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import jwtDecode from "jwt-decode";
+import * as jwt from "jwt-decode";
 import { useAuth } from "@/components/authContext";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader";
@@ -42,7 +42,7 @@ const Login = () => {
         toast.success("Login successful!");
         const tokenValue = res.data.accessToken;
         login(tokenValue);
-        const decoded = jwtDecode(tokenValue);
+        const decoded = jwt.default(res.data.accessToken);
         router.push(decoded.role === "user" ? "/dashboard/media?page=1" : "/");
       } else {
         toast.error(res.data.message || res.data.error || "Something went wrong during login");
