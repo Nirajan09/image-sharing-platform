@@ -6,63 +6,77 @@ const register = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
-    //check if username or email already exists in the database
-
-    const user = await User.findOne({ $or: [{ username }, { email }] });
-
-    if (user) {
-      return res.status(401).json({
+    if (!username || !email || !password) {
+      return res.status(400).json({
         success: false,
-        message: "Username or Email already exists in the database",
+        message: "Missing required fields",
       });
     }
 
-    //Hashed the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // Check if username or email already exists
+    const userExists = await User.findOne({ $or: [{ username }, { email }] });
+    if (userExists) {
+      return res.status(409).json({
+        success: false,
+        message: "Username or Email already exists",
+      });
+    }
 
-    const insertData = await User.create({
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user
+    const newUser = await User.create({
       username,
       email,
       password: hashedPassword,
       role: role || "user",
     });
-    if (insertData) {
-      res.status(200).json({
-        success: true,
-        message: "User Registered Successfully",
-        data: insertData,
-      });
-    }
+
+    res.status(201).json({
+      success: true,
+      message: "User registered successfully",
+      data: newUser,
+    });
   } catch (error) {
-    res.status(404).json({
+    console.error("Register Error:", error);
+    res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Something went wrong during registration",
+      error: error.message,
     });
   }
 };
+
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    // check if username is valid or not
+
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing username or password",
+      });
+    }
+
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Username is Invalid",
+        message: "Invalid username",
       });
     }
-    //check if password is valid or not
 
-    const userPassword = await bcrypt.compare(password, user.password);
-    if (!userPassword) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: "Password is Invalid",
+        message: "Invalid password",
       });
     }
-    //generate the token
-    const accessToken = jwt.sign(
+
+    // Generate JWT token
+    const token = jwt.sign(
       {
         userId: user._id,
         username: user.username,
@@ -70,20 +84,20 @@ const login = async (req, res) => {
         role: user.role,
       },
       process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: "1h",
-      }
+      { expiresIn: "1h" }
     );
 
     res.status(200).json({
       success: true,
-      message: "Login Success",
-      accessToken,
+      message: "Login successful",
+      accessToken: token,
     });
   } catch (error) {
-    res.status(404).json({
+    console.error("Login Error:", error);
+    res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Something went wrong during login",
+      error: error.message,
     });
   }
 };
