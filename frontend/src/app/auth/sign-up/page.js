@@ -54,12 +54,11 @@ const Register = () => {
         toast.success("Registration successful! Please log in.");
         setTimeout(() => router.push("/auth/sign-in"), 1500);
       } else {
-        toast.error(res.data.message || "Something went wrong during registration");
+        toast.error(res.data.message || res.data.error || "Something went wrong during registration");
       }
     } catch (error) {
       console.error("Registration failed", error);
       if (error.response) {
-        // Show exact backend message
         toast.error(
           error.response.data?.message ||
           error.response.data?.error ||

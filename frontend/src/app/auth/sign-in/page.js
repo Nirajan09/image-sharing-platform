@@ -35,10 +35,7 @@ const Login = () => {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACK_END}/api/login`,
         data,
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
       );
 
       if (res.data.success) {
@@ -48,8 +45,7 @@ const Login = () => {
         const decoded = jwtDecode(tokenValue);
         router.push(decoded.role === "user" ? "/dashboard/media?page=1" : "/");
       } else {
-        // Show backend message if login failed
-        toast.error(res.data.message || "Something went wrong during login");
+        toast.error(res.data.message || res.data.error || "Something went wrong during login");
       }
     } catch (error) {
       console.error("Login error", error);
