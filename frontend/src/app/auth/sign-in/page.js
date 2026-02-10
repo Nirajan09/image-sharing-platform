@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import * as jwt from "jwt-decode";
 import { useAuth } from "@/components/authContext";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader";
 
+// Form validation schema
 const schema = yup.object().shape({
   username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
@@ -29,6 +29,16 @@ const Login = () => {
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
 
+  // Base64 decode helper (to decode JWT payload)
+  const decodeJWT = (token) => {
+    try {
+      const payload = token.split(".")[1];
+      return JSON.parse(atob(payload));
+    } catch (err) {
+      return null;
+    }
+  };
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -42,8 +52,12 @@ const Login = () => {
         toast.success("Login successful!");
         const tokenValue = res.data.accessToken;
         login(tokenValue);
-        const decoded = jwt.default(res.data.accessToken);
-        router.push(decoded.role === "user" ? "/dashboard/media?page=1" : "/");
+
+        // Decode JWT safely without using jwt-decode package
+        const decoded = decodeJWT(tokenValue);
+        const userRole = decoded?.role || "user";
+
+        router.push(userRole === "user" ? "/dashboard/media?page=1" : "/");
       } else {
         toast.error(res.data.message || res.data.error || "Something went wrong during login");
       }
@@ -52,8 +66,8 @@ const Login = () => {
       if (error.response) {
         toast.error(
           error.response.data?.message ||
-          error.response.data?.error ||
-          "Login failed"
+            error.response.data?.error ||
+            "Login failed"
         );
       } else {
         toast.error("Network error or server not reachable.");
@@ -63,6 +77,7 @@ const Login = () => {
     }
   };
 
+  // Redirect if already logged in
   useEffect(() => {
     if (token) router.push("/dashboard/media");
   }, [token, router]);
